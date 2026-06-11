@@ -1,12 +1,11 @@
-import React from "react";
-import { useParams, useNavigate } from "react-router";
+
+import { useParams } from "react-router";
 import { useProduct } from "../../hooks/useProduct";
-import Navbar from "../../components/Navbar";
 import StarRating from "../../components/StarRating";
 import { LoadingDetailPage } from "../../components/LoadingGrid";
 import ErrorMessage from "../../components/ErrorMessage";
-import { button } from "../../components/ui";
 import ProductLayout from "./layout";
+import { Typography } from "~/components/ui/typography";
 
 export function meta() {
     return [
@@ -17,20 +16,12 @@ export function meta() {
 
 export default function ProductDetail() {
     const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
     const { product, selectedImage, setSelectedImage, originalPrice, loading, error } = useProduct(id);
 
-    const backButtonClass = button({
-        variant: "outline",
-        size: "sm",
-        className: "inline-flex items-center gap-2",
-    });
 
     return (
-        <div className="min-h-screen bg-slate-50 pb-10">
-            <Navbar />
+        <div className=" bg-slate-50 h-screen overflow-hidden">
             {loading && <LoadingDetailPage />}
-
             {error && !loading && (
                 <div className="mt-6">
                     <ErrorMessage message={error} onRetry={() => window.location.reload()} />
@@ -42,14 +33,25 @@ export default function ProductDetail() {
                     <ProductLayout.Gallery selectedImage={selectedImage} setSelectedImage={setSelectedImage} images={product.images || []} />
                     <ProductLayout.Info>
                         <ProductLayout.Sections title={product.title}>
+
+
                             <div className="flex flex-wrap items-end gap-4">
                                 <p className="text-3xl font-semibold text-slate-950">${product.price.toFixed(2)}</p>
                                 {originalPrice && <p className="text-sm text-slate-500 line-through">${originalPrice}</p>}
                                 <StarRating rating={product.rating} size="md" />
                             </div>
-                            <p> Brand : {product.brand} </p>
-                            <p> Category : {product.category} </p>
-                            <p> Stock : {product.stock} </p>
+
+                            {[
+                                { label: "Brand", info: product.brand },
+                                { label: "Category", info: product.category },
+                                { label: "Stock", info: product.stock },
+                            ].map((info, idx) => (
+                                <Typography key={idx} variant="title">
+                                    {info.label} : <span className="font-medium text-slate-700">{info.info}</span>
+                                </Typography>
+                            ))}
+
+
                         </ProductLayout.Sections>
                         <ProductLayout.Sections title="Description">
                             <p>{product.description}</p>
@@ -68,3 +70,11 @@ export default function ProductDetail() {
         </div>
     );
 }
+
+
+// <Typography variant="subtitle" className="mt-2">
+//     {product.brand} - {product.category}
+// </Typography>
+// <p> Brand : {product.brand} </p>
+// <p> Category : {product.category} </p>
+// <p> Stock : {product.stock} </p>

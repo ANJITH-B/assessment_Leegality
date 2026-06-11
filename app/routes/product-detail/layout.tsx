@@ -1,12 +1,16 @@
 import { useNavigate } from "react-router";
 import StarRating from "../../components/StarRating";
 import type { Review } from "~/types/product"
-import { Button } from "~/components/ui";
+import Button from "~/components/ui/button";
 
 
 const ProductLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="flex mx-auto max-w-7xl px-4 py-8 sm:px-6 xl:px-8">{children}</div>
+        <div className=" p-4 sm:px-6 xl:px-8 relative h-[calc(100vh-4rem)] overflow-y-auto">
+            <div className=" mx-auto max-w-7xl ">
+                {children}
+                </div>
+            </div>
     )
 }
 
@@ -14,50 +18,53 @@ const Gallery = ({ images, setSelectedImage, selectedImage }: { images: string[]
     const navigate = useNavigate();
 
     return (
-        <div>
+        <div className="space-y-5 w-1/2 py-8 fixed top-16 pl-6">
             <Button type="button" variant="outline" onClick={() => navigate("/products")} aria-label="Back to product list"> ← Back </Button>
-
-            <img
-                src={selectedImage}
-                alt={"https://placehold.co/400x400?text=No+Image"}
-                className="h-[420px] w-full object-cover transition duration-300 hover:scale-105"
-                onError={(e) => {
-                    (e.target as HTMLImageElement).src = "https://placehold.co/400x400?text=No+Image";
-                }}
-            />
-
-            {images && images.length > 1 && (
-                <div className="grid gap-3 grid-cols-4">
-                    {images.map((img, idx) => (
-                        <button
-                            key={idx}
-                            type="button"
-                            className={`overflow-hidden rounded-2xl border ${selectedImage === img ? "border-indigo-600 shadow-sm" : "border-slate-200"
-                                } bg-white transition`}
-                            onClick={() => setSelectedImage(img)}
-                            aria-label={`View image ${idx + 1}`}
-                        >
-                            <img
-                                src={img}
-                                // alt={`${product.title} view ${idx + 1}`}
-                                alt="nn"
-                                className="h-20 w-full object-cover"
-                                onError={(e) => {
-                                    (e.target as HTMLImageElement).src = "https://placehold.co/80x80?text=Img";
-                                }}
-                            />
-                        </button>
-                    ))}
+            <div className="flex flex-col justify-center space-y-6">
+                <img
+                    src={selectedImage}
+                    alt={"https://placehold.co/400x400?text=No+Image"}
+                    className="h-[420px] w-full object-contain transition duration-300"
+                    onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://placehold.co/400x400?text=No+Image";
+                    }}
+                />
+                <div className="flex flex-row w-full justify-center ">
+                    {images && images.length > 1 && (
+                        <div className=" flex gap-3">
+                            {images.map((img, idx) => (
+                                <button
+                                    key={idx}
+                                    type="button"
+                                    className={`overflow-hidden h-20 w-20 p-2 rounded border ${selectedImage === img ? "border-indigo-600 shadow-sm" : "border-slate-200"
+                                        } bg-white transition`}
+                                    onClick={() => setSelectedImage(img)}
+                                    aria-label={`View image ${idx + 1}`}
+                                >
+                                    <img
+                                        src={img}
+                                        alt={`preview ${idx + 1}`}
+                                        className="object-contain"
+                                        onError={(e) => {
+                                            (e.target as HTMLImageElement).src = "https://placehold.co/80x80?text=Img";
+                                        }}
+                                    />
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     )
 }
 
 const Info = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className="space-y-5 w-1/2">
-            {children}
+        <div className="w-full flex justify-end">
+            <div className="w-1/2">
+                {children}
+            </div>
         </div>
     )
 }
