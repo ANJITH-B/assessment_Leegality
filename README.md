@@ -46,7 +46,7 @@ http://localhost:5173
 - Custom hooks are used to separate API handling and state management logic.
 - Maintained clear separation between routes, components, hooks, services, and types for better scalability and maintainability.
 - Implemented Tailwind variants to ensure consistent UI styling and maintain a scalable design system
-- Add compound component pattern to keep layout logic separated and for the accurate loading skeleton 
+- Add compound component pattern to keep ui logic separated and for the accurate loading skeleton 
 
 ## 🚀 Improvements With More Time
 
