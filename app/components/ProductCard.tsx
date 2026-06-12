@@ -16,7 +16,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div
-      className="group cursor-pointer overflow-hidden rounded border border-slate-200 bg-white transition duration-200 "
+      className="group cursor-pointer overflow-hidden rounded border border-slate-200 bg-white transition duration-200 flex flex-row md:flex-col"
       onClick={() => navigate(`/product/${product.id}`)}
       role="button"
       tabIndex={0}
@@ -28,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           src={product.thumbnail}
           alt={product.title}
           loading="lazy"
-          className="h-56 w-full object-contain transition duration-300 group-hover:scale-105"
+          className="h-40 md:h-56 w-full object-contain transition duration-300 group-hover:scale-105"
           onError={(e) => {
             (e.target as HTMLImageElement).src =
               "https://placehold.co/300x300?text=No+Image";
@@ -41,11 +41,17 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
       <div className="space-y-3 p-5">
-        <h3 className="text-sm font-semibold leading-6 text-slate-950">{product.title}</h3>
+        <h3 className="text-sm font-semibold leading-6 text-slate-950">
+          {product.title}
+        </h3>
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-lg font-semibold text-slate-950">${product.price.toFixed(2)}</span>
+          <span className="text-lg font-semibold text-slate-950">
+            ${product.price.toFixed(2)}
+          </span>
           {originalPrice && (
-            <span className="text-sm text-slate-500 line-through">${originalPrice}</span>
+            <span className="text-sm text-slate-500 line-through">
+              ${originalPrice}
+            </span>
           )}
         </div>
         <StarRating rating={product.rating} />

@@ -6,7 +6,11 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export default function Pagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: PaginationProps) {
   if (totalPages <= 1) return null;
 
   const getPages = () => {
@@ -26,13 +30,27 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
   };
 
   return (
-    <nav className="mt-8 flex flex-wrap items-center justify-center gap-2 px-3 py-3" aria-label="Pagination">
-      <Button variant="outline" disabled={currentPage === 1}
+    <nav
+      className="mt-8 flex flex-wrap items-center justify-center gap-2 px-3 py-3 pb-20"
+      aria-label="Pagination"
+    >
+      <Button
+        variant="outline"
+        disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        aria-label="Previous page"> ← Previous </Button>
+        aria-label="Previous page"
+      >
+        {" "}
+        ← Previous{" "}
+      </Button>
       {getPages().map((page, idx) =>
         page === "..." ? (
-          <span key={`ellipsis-${idx}`} className="px-3 py-2 text-sm text-slate-500">…</span>
+          <span
+            key={`ellipsis-${idx}`}
+            className="px-3 py-2 text-sm text-slate-500"
+          >
+            …
+          </span>
         ) : (
           <Button
             key={page}
@@ -42,12 +60,17 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
           >
             {page}
           </Button>
-        )
+        ),
       )}
-      <Button variant="outline" disabled={currentPage === totalPages}
+      <Button
+        variant="outline"
+        disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        aria-label="Next page"> Next → </Button>
+        aria-label="Next page"
+      >
+        {" "}
+        Next →{" "}
+      </Button>
     </nav>
   );
 }
-
