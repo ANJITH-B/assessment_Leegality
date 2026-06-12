@@ -26,7 +26,7 @@ export default function LoadingGrid({ count = 12 }: LoadingGridProps) {
 
 export function LoadingDetailPage() {
   return (
-    <div className="grid gap-6 rounded border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-[1.4fr_1fr]">
+    <div className="grid gap-6  p-6 mx-auto max-w-7xl md:grid-cols-[1.4fr_1fr]">
       <div className="h-80 rounded bg-slate-200 animate-pulse" />
       <div className="space-y-5">
         <div className="h-8 w-3/4 rounded-full bg-slate-200 animate-pulse" />
