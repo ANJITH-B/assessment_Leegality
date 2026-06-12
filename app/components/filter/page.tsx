@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { useFilters } from "../../hooks/useFilters";
 import { useCategories } from "../../hooks/useCategories";
 import SearchInput from "../ui/Input";
 import FilterLayout from "./layout";
 import Button from "../ui/button";
+import { useFilters } from "~/context/FilterContext";
 
 interface FilterSidebarProps {
   availableBrands: string[];
 }
 
 export default function FilterSidebar({ availableBrands }: FilterSidebarProps) {
-  const { filters, setCategory, setPriceRange, toggleBrand, resetFilters } = useFilters();
-  const { categories , loading } = useCategories();
+  const { filters, setCategory, setPriceRange, toggleBrand, resetFilters } =
+    useFilters();
+  const { categories, loading } = useCategories();
   const [localMin, setLocalMin] = useState(filters.minPrice);
   const [localMax, setLocalMax] = useState(filters.maxPrice);
 
@@ -31,17 +32,22 @@ export default function FilterSidebar({ availableBrands }: FilterSidebarProps) {
     filters.selectedBrands.length > 0;
 
   return (
-    <FilterLayout >
+    <FilterLayout>
       <FilterLayout.Header>
         <SearchInput />
         {hasActiveFilters && (
-          <Button type="button" variant="danger" size="sm" fullWidth onClick={resetFilters}>
+          <Button
+            type="button"
+            variant="danger"
+            size="sm"
+            fullWidth
+            onClick={resetFilters}
+          >
             Clear All Filters
           </Button>
         )}
       </FilterLayout.Header>
       <FilterLayout.Content>
-
         <FilterLayout.Section title="Categories" isLoading={loading}>
           <ul className="space-y-0 2xl:space-x-1">
             {categories.map((cat) => (
@@ -50,7 +56,11 @@ export default function FilterSidebar({ availableBrands }: FilterSidebarProps) {
                   <input
                     type="checkbox"
                     checked={filters.selectedCategory === cat.slug}
-                    onChange={() => setCategory(filters.selectedCategory === cat.slug ? "" : cat.slug)}
+                    onChange={() =>
+                      setCategory(
+                        filters.selectedCategory === cat.slug ? "" : cat.slug,
+                      )
+                    }
                     className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
                   />
                   <span>{cat.name}</span>
@@ -80,7 +90,13 @@ export default function FilterSidebar({ availableBrands }: FilterSidebarProps) {
                 className="w-full rounded border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
               />
             </div>
-            <Button type="button" variant="secondary" size="sm" fullWidth onClick={handleApplyPrice}>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              fullWidth
+              onClick={handleApplyPrice}
+            >
               Apply
             </Button>
           </div>
